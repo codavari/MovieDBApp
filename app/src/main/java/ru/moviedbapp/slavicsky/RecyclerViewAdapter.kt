@@ -1,4 +1,4 @@
-package ru.moviedbapp
+package ru.moviedbapp.slavicsky
 
 import android.content.Context
 import android.content.Intent
@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import ru.moviedbapp.R
 
 class RecyclerViewAdapter(private val mContext: Context, mData: ArrayList<Film>) :
     RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
@@ -35,6 +36,7 @@ class RecyclerViewAdapter(private val mContext: Context, mData: ArrayList<Film>)
             // passing data to the book activity
             intent.putExtra("Title", mData[position].title)
             intent.putExtra("Description", mData[position].description)
+            intent.putExtra("Rating", mData[position].rating)
             intent.putExtra("Thumbnail", mData[position].thumbnail)
             // start the activity
             mContext.startActivity(intent)

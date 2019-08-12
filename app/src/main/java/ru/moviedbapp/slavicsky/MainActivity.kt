@@ -1,12 +1,11 @@
-package ru.moviedbapp
+package ru.moviedbapp.slavicsky
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
+import ru.moviedbapp.R
 import java.util.ArrayList
 
 class MainActivity : AppCompatActivity() {
@@ -16,14 +15,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val filmList = ArrayList<Film>().apply {
-
-            add(0, Film("jopa", 8.8, "jopa", R.drawable.asuka1))
-            add(1, Film("jopa", 8.8, "jopa", R.drawable.asuka2))
-            add(2, Film("jopa", 8.8, "jopa", R.drawable.asuka3))
-            add(3, Film("jopa", 8.8, "jopa", R.drawable.asuka4))
-            add(4, Film("jopa", 8.8, "jopa", R.drawable.asuka5))
-            add(5, Film("jopa", 8.8, "jopa", R.drawable.asuka6))
-            add(6, Film("jopa", 8.8, "jopa", R.drawable.asuka7))
+            add(0, Film("aaa", 2.0, "nge", R.drawable.asuka1))
+            add(0, Film("aaa", 8.0, "nge", R.drawable.asuka2))
+            add(0, Film("aaa", 7.0, "nge", R.drawable.asuka3))
         }
 
         val recyclerView = recyclerview_id
