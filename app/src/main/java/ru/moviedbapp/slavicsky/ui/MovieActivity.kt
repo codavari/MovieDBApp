@@ -1,11 +1,11 @@
-package ru.moviedbapp.slavicsky
+package ru.moviedbapp.slavicsky.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_film.*
 import ru.moviedbapp.R
 
-class FilmActivity : AppCompatActivity() {
+class MovieActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

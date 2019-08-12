@@ -10,11 +10,14 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import ru.moviedbapp.R
+import ru.moviedbapp.slavicsky.data.Movie
+import ru.moviedbapp.slavicsky.data.MovieResult
+import ru.moviedbapp.slavicsky.ui.MovieActivity
 
-class RecyclerViewAdapter(private val mContext: Context, mData: ArrayList<Film>) :
+class RecyclerViewAdapter(private val mContext: Context, mData: ArrayList<MovieResult>) :
     RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
 
-    private val mData: List<Film> = mData
+    private val mData: List<MovieResult> = mData
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
             val view: View
@@ -29,18 +32,7 @@ class RecyclerViewAdapter(private val mContext: Context, mData: ArrayList<Film>)
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-        holder.title.text = mData[position].title
-        holder.thumbnail.setImageResource(mData[position].thumbnail)
-        holder.cardView.setOnClickListener {
-            val intent = Intent(mContext, FilmActivity::class.java)
-            // passing data to the book activity
-            intent.putExtra("Title", mData[position].title)
-            intent.putExtra("Description", mData[position].description)
-            intent.putExtra("Rating", mData[position].rating)
-            intent.putExtra("Thumbnail", mData[position].thumbnail)
-            // start the activity
-            mContext.startActivity(intent)
-        }
+
     }
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
