@@ -12,6 +12,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 
 import com.squareup.picasso.Picasso
 import ru.moviedbapp.R
+import ru.moviedbapp.R.string.average_vote
 import ru.moviedbapp.slavicsky.data.Movie
 
 class MovieDetailActivity : AppCompatActivity() {
@@ -45,9 +46,9 @@ class MovieDetailActivity : AppCompatActivity() {
 
         val button = findViewById<Button>(R.id.calendar_button)
 
-        title.setText(mMovie!!.title)
-        description.setText(mMovie!!.description)
-        rating.text = "Average vote: " + mMovie!!.rating
+        title.text = mMovie!!.title
+        description.text = mMovie!!.description
+        rating.text = getString(average_vote) + mMovie!!.rating
 
         Picasso.get()
             .load(mMovie!!.getPoster())

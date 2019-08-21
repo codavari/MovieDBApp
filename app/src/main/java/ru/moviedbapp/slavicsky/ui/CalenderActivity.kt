@@ -3,12 +3,13 @@ package ru.moviedbapp.slavicsky.ui
 import android.app.Activity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.skyhope.eventcalenderlibrary.model.Event
 import kotlinx.android.synthetic.main.activity_calendar.*
 import ru.moviedbapp.R
 import java.util.*
 
-class CalendarActivity : Activity() {
+class CalendarActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +27,7 @@ class CalendarActivity : Activity() {
     }
 
     companion object {
-        private val TAG = "CalenderTest"
+        private const val TAG = "CalenderTest"
     }
 
 }

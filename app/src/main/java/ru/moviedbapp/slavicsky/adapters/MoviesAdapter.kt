@@ -19,7 +19,9 @@ class MoviesAdapter(private val mContext: Context) : RecyclerView.Adapter<MovieV
     private val mInflater: LayoutInflater = LayoutInflater.from(mContext)
 
     override fun getItemCount(): Int {
-        return mMovieList.size
+        return if (::mMovieList.isInitialized) {
+            mMovieList.size
+        } else 0
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
