@@ -49,7 +49,6 @@ dependencies {
     def kotlinCoroutineVersion = "1.0.1"
     def picassoVersion = "2.71828"
 
-
     //Moshi
     implementation "com.squareup.moshi:moshi-kotlin:1.8.0"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
@@ -69,6 +68,9 @@ dependencies {
     implementation ("com.squareup.picasso:picasso:$picassoVersion"){
         exclude group: "com.android.support"
     }
+
+    //Event Calendar
+    implementation 'com.github.mahimrocky:EventCalender:1.0.0'
 
     //Kotlin Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.1"

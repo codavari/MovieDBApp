@@ -38,12 +38,11 @@ object RetrofitFactory{
                     .addInterceptor(loggingInterceptor)
                     .build()
         }else{
-            OkHttpClient().newBuilder()
+             OkHttpClient().newBuilder()
                     .addInterceptor(loggingInterceptor)
                     .addInterceptor(authInterceptor)
                     .build()
         }
-
 
     fun retrofit(baseUrl : String) : Retrofit = Retrofit.Builder()
             .client(client)
@@ -51,5 +50,4 @@ object RetrofitFactory{
             .addConverterFactory(MoshiConverterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
-
 }

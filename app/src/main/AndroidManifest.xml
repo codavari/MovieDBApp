@@ -23,8 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".slavicsky.ui.MovieActivity"/>
-        <activity android:name="DetailImageActivity"/>
+        <activity android:name=".slavicsky.ui.CalendarActivity"/>
+        <activity android:name=".slavicsky.ui.MovieDetailActivity" />
     </application>
 
 </manifest>

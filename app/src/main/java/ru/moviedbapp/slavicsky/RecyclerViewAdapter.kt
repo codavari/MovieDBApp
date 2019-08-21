@@ -1,7 +1,6 @@
 package ru.moviedbapp.slavicsky
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,13 +10,11 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import ru.moviedbapp.R
 import ru.moviedbapp.slavicsky.data.Movie
-import ru.moviedbapp.slavicsky.data.MovieResult
-import ru.moviedbapp.slavicsky.ui.MovieActivity
 
-class RecyclerViewAdapter(private val mContext: Context, mData: ArrayList<MovieResult>) :
+class RecyclerViewAdapter(private val mContext: Context, mData: ArrayList<Movie.MovieResult>) :
     RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
 
-    private val mData: List<MovieResult> = mData
+    private val mData: List<Movie.MovieResult> = mData
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
             val view: View
@@ -31,8 +28,6 @@ class RecyclerViewAdapter(private val mContext: Context, mData: ArrayList<MovieR
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-
-
     }
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
