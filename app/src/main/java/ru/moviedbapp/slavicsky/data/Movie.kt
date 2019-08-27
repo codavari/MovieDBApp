@@ -7,15 +7,15 @@ import android.os.Parcelable
 import com.squareup.moshi.Json
 
 class Movie(parcel: Parcel) : Parcelable {
-    @Json(name = "title")
+    @field:Json(name = "title")
     var title: String? = parcel.readString()
-    @Json(name = "poster_path")
+    @field:Json(name = "poster_path")
     private var poster: String? = parcel.readString()
-    @Json(name = "overview")
+    @field:Json(name = "overview")
     var overview: String? = parcel.readString()
-    @Json(name = "backdrop_path")
+    @field:Json(name = "backdrop_path")
     var backdrop: String? = parcel.readString()
-    @Json(name = "vote_average")
+    @field:Json(name = "vote_average")
     var voteAverage: Double = parcel.readDouble()
 
     fun getPoster(): String {
@@ -47,12 +47,12 @@ class Movie(parcel: Parcel) : Parcelable {
     }
 }
 
-data class MovieResponse(@Json(name = "results") internal val results: List<Movie>):Parcelable{
+data class MovieResponse(@field:Json(name="results") internal val jopa: List<Movie>):Parcelable{
 
     constructor(parcel: Parcel) : this(parcel.createTypedArrayList(Movie.CREATOR) as List<Movie>)
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeTypedList(results)
+        parcel.writeTypedList(jopa)
     }
 
     override fun describeContents(): Int {

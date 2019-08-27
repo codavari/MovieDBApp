@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 import ru.moviedbapp.R
 import ru.moviedbapp.slavicsky.adapters.MoviesAdapter
 import ru.moviedbapp.slavicsky.data.MovieResponse
@@ -45,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                 response: Response<MovieResponse>
             ) {
                 movieResponse = response.body()
-                mAdapter.mMovieList = movieResponse!!.results
+                mAdapter.mMovieList = movieResponse!!.jopa
                 println(mAdapter.mMovieList)
             }
 
