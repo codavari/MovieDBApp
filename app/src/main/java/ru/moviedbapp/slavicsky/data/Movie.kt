@@ -4,28 +4,19 @@ import android.annotation.SuppressLint
 import android.os.Parcel
 import android.os.Parcelable
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
 
-class Movie : Parcelable {
-    var title: String? = null
-    @SerializedName("poster_path")
-    private var poster: String? = null
-    @SerializedName("overview")
-    var description: String? = null
-    @SerializedName("backdrop_path")
-    var backdrop: String? = null
-    @SerializedName("vote_average")
-    var rating: Double? = null
-
-    constructor() {}
-
-    internal constructor(`in`: Parcel) {
-        title = `in`.readString()
-        poster = `in`.readString()
-        description = `in`.readString()
-        backdrop = `in`.readString()
-        rating = `in`.readDouble()
-    }
+class Movie(parcel: Parcel) : Parcelable {
+    @Json(name = "title")
+    var title: String? = parcel.readString()
+    @Json(name = "poster_path")
+    private var poster: String? = parcel.readString()
+    @Json(name = "overview")
+    var overview: String? = parcel.readString()
+    @Json(name = "backdrop_path")
+    var backdrop: String? = parcel.readString()
+    @Json(name = "vote_average")
+    var voteAverage: Double = parcel.readDouble()
 
     fun getPoster(): String {
         return "http://image.tmdb.org/t/p/w500" + poster!!
@@ -38,24 +29,48 @@ class Movie : Parcelable {
     override fun writeToParcel(parcel: Parcel, i: Int) {
         parcel.writeString(title)
         parcel.writeString(poster)
-        parcel.writeString(description)
+        parcel.writeString(overview)
         parcel.writeString(backdrop)
-        parcel.writeString(rating!!.toString())
+        parcel.writeString(voteAverage.toString())
     }
 
-    class MovieResult(val results: List<Movie>)
-
     companion object {
-
         @SuppressLint("ParcelCreator")
         val CREATOR: Parcelable.Creator<Movie> = object : Parcelable.Creator<Movie> {
             override fun createFromParcel(`in`: Parcel): Movie {
                 return Movie(`in`)
             }
-
             override fun newArray(size: Int): Array<Movie?> {
                 return arrayOfNulls(size)
             }
         }
     }
 }
+
+data class MovieResponse(@Json(name = "results") internal val results: List<Movie>):Parcelable{
+
+    constructor(parcel: Parcel) : this(parcel.createTypedArrayList(Movie.CREATOR) as List<Movie>)
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeTypedList(results)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<MovieResponse> {
+        override fun createFromParcel(parcel: Parcel): MovieResponse {
+            return MovieResponse(parcel)
+        }
+
+        override fun newArray(size: Int): Array<MovieResponse?> {
+            return arrayOfNulls(size)
+        }
+    }
+}
+
+
+
+
+

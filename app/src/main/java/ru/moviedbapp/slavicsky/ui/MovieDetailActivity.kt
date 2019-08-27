@@ -19,7 +19,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
     private var mMovie: Movie? = null
     private lateinit var backdrop: ImageView
-    private lateinit var poster: ImageView
+    lateinit var poster: ImageView
     private lateinit var rating: TextView
     private lateinit var title: TextView
     private lateinit var description: TextView
@@ -38,17 +38,17 @@ class MovieDetailActivity : AppCompatActivity() {
         val toolbarLayout = findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)
         toolbarLayout.title = mMovie!!.title
 
-        backdrop = findViewById<ImageView>(R.id.backdrop)
-        title = findViewById<TextView>(R.id.movie_title)
-        description = findViewById<TextView>(R.id.movie_description)
-        poster = findViewById<ImageView>(R.id.movie_poster)
-        rating = findViewById<TextView>(R.id.movie_rating)
+        backdrop = findViewById(R.id.backdrop)
+        title = findViewById(R.id.movie_title)
+        description = findViewById(R.id.movie_description)
+        poster = findViewById(R.id.movie_poster)
+        rating = findViewById(R.id.movie_rating)
 
         val button = findViewById<Button>(R.id.calendar_button)
 
         title.text = mMovie!!.title
-        description.text = mMovie!!.description
-        rating.text = getString(average_vote) + mMovie!!.rating
+        description.text = mMovie!!.overview
+        rating.text = getString(average_vote) + mMovie!!.voteAverage
 
         Picasso.get()
             .load(mMovie!!.getPoster())

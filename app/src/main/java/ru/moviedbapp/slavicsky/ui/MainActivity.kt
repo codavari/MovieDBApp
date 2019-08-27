@@ -2,7 +2,6 @@ package ru.moviedbapp.slavicsky.ui
 
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.GridLayoutManager
@@ -12,7 +11,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import ru.moviedbapp.R
 import ru.moviedbapp.slavicsky.adapters.MoviesAdapter
-import ru.moviedbapp.slavicsky.data.Movie
+import ru.moviedbapp.slavicsky.data.MovieResponse
 import ru.moviedbapp.slavicsky.service.ApiFactory
 
 class MainActivity : AppCompatActivity() {
@@ -33,38 +32,43 @@ class MainActivity : AppCompatActivity() {
         val movieService = ApiFactory.tmdbApi
         val call = movieService.getPopularMovies()
 
-        call.enqueue(object : Callback<MutableList<Movie>> {
-            override fun onFailure(call: Call<MutableList<Movie>>, t: Throwable) {
+
+        var movieResponse: MovieResponse?
+
+        call.enqueue(object : Callback<MovieResponse> {
+            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
                 t.printStackTrace()
             }
 
-            override fun onResponse(call: Call<MutableList<Movie>>,
-                                    response: Response<MutableList<Movie>>) {
-                mAdapter.mMovieList = response.body()!!
+            override fun onResponse(
+                call: Call<MovieResponse>,
+                response: Response<MovieResponse>
+            ) {
+                movieResponse = response.body()
+                mAdapter.mMovieList = movieResponse!!.results
+                println(mAdapter.mMovieList)
             }
-        })
 
-/*        fun getPopularMovies() {
+/*fun getPopularMovies() {
         }*/
 
-        fun onCreateOptionsMenu(menu: Menu): Boolean {
-            // Inflate the menu; this adds items to the action bar if it is present.
-            menuInflater.inflate(R.menu.menu_main, menu)
-            return true
-        }
-
-        fun onOptionsItemSelected(item: MenuItem): Boolean {
-            // Handle action bar item clicks here. The action bar will
-            // automatically handle clicks on the Home/Up button, so long
-            // as you specify a parent activity in AndroidManifest.xml.
-            val id = item.itemId
-
-
-            return if (id == R.id.action_settings) {
-                true
-            } else super.onOptionsItemSelected(item)
-        }
+            fun onCreateOptionsMenu(menu: Menu): Boolean {
+                // Inflate the menu; this adds items to the action bar if it is present.
+                menuInflater.inflate(R.menu.menu_main, menu)
+                return true
+            }
+/*
+            fun onOptionsItemSelected(item: MenuItem): Boolean {
+                // Handle action bar item clicks here. The action bar will
+                // automatically handle clicks on the Home/Up button, so long
+                // as you specify a parent activity in AndroidManifest.xml.
+                val id = item.itemId
 
 
+                return if (id == R.id.action_settings) {
+                    true
+                } else super.onOptionsItemSelected(item)
+            }*/
+        })
     }
 }

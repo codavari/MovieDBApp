@@ -10,11 +10,12 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import ru.moviedbapp.R
 import ru.moviedbapp.slavicsky.data.Movie
+import ru.moviedbapp.slavicsky.data.MovieResponse
 
-class RecyclerViewAdapter(private val mContext: Context, mData: ArrayList<Movie.MovieResult>) :
+class RecyclerViewAdapter(private val mContext: Context, mData: ArrayList<MovieResponse>) :
     RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
 
-    private val mData: List<Movie.MovieResult> = mData
+    private val mData: List<MovieResponse> = mData
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
             val view: View
@@ -28,6 +29,7 @@ class RecyclerViewAdapter(private val mContext: Context, mData: ArrayList<Movie.
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+
     }
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

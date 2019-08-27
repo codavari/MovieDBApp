@@ -17,6 +17,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         Properties properties = new Properties()
         properties.load(project.rootProject.file("local.properties").newDataInputStream())
@@ -81,10 +82,14 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'com.google.android.material:material:1.0.0'
 
+    //Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.3.50"
 
     testImplementation 'junit:junit:4.12'
     implementation 'com.squareup.retrofit:retrofit:1.9.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.github.mahimrocky:EventCalender:1.0.0'
+
+    //Anko
+    implementation "org.jetbrains.anko:anko-common:0.8.3"
 }

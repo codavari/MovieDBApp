@@ -32,17 +32,17 @@ object RetrofitFactory{
 
     //Not logging the authkey if not debug
     private val client =
-        if(BuildConfig.DEBUG){
+/*        if(BuildConfig.DEBUG){
              OkHttpClient().newBuilder()
                     .addInterceptor(authInterceptor)
                     .addInterceptor(loggingInterceptor)
                     .build()
-        }else{
+        }else{*/
              OkHttpClient().newBuilder()
                     .addInterceptor(loggingInterceptor)
                     .addInterceptor(authInterceptor)
                     .build()
-        }
+        //}
 
     fun retrofit(baseUrl : String) : Retrofit = Retrofit.Builder()
             .client(client)
