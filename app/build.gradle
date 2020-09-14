@@ -18,24 +18,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
-        Properties properties = new Properties()
-        properties.load(project.rootProject.file("local.properties").newDataInputStream())
-        def tmdbApiKey = properties.getProperty("tmdb_api_key", "")
-
-        debug {
-            buildConfigField 'String', "TMDB_API_KEY", tmdbApiKey
-            resValue 'string', "api_key", tmdbApiKey
-        }
-
-        release {
-            buildConfigField 'String', "TMDB_API_KEY", tmdbApiKey
-            resValue 'string', "api_key", tmdbApiKey
-
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
 }
 
 dependencies {
@@ -89,6 +71,4 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.github.mahimrocky:EventCalender:1.0.0'
 
-    //Anko
-    implementation "org.jetbrains.anko:anko-common:0.8.3"
 }
