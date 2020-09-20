@@ -22,8 +22,12 @@ class MovieRepositoryImpl constructor(
         }
     }
 
-    override suspend fun refresh() =
-        getMoviesFromRemote().let { changesChannel.send(Change.Refreshed(it)) }
+    override suspend fun refresh() {
+
+    }
+
+    suspend fun refresh(page: Int) =
+        getMoviesFromRemote(page).let { changesChannel.send(Change.Refreshed(it)) }
 
     @ExperimentalCoroutinesApi
     private val changesChannel = BroadcastChannel<Change>(Channel.CONFLATED)
@@ -33,5 +37,4 @@ class MovieRepositoryImpl constructor(
             moviesService.fetchMovies(page).map(responseToDomain)
         }
     }
-
 }
