@@ -5,8 +5,13 @@ import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 import retrofit2.HttpException
+import ru.moviedbapp.codavari.util.*
 import java.io.IOException
-
+import ru.moviedbapp.codavari.util.Constants.CACHE_TIMEOUT
+import ru.moviedbapp.codavari.util.Constants.NETWORK_TIMEOUT
+import ru.moviedbapp.codavari.util.ErrorHandling.CACHE_ERROR_TIMEOUT
+import ru.moviedbapp.codavari.util.ErrorHandling.NETWORK_ERROR_TIMEOUT
+import ru.moviedbapp.codavari.util.ErrorHandling.UNKNOWN_ERROR
 
 /**
  * Reference: https://medium.com/@douglas.iacovelli/how-to-handle-errors-with-retrofit-and-coroutines-33e7492a912
@@ -21,28 +26,28 @@ suspend fun <T> safeApiCall(
         try {
             // throws TimeoutCancellationException
             withTimeout(NETWORK_TIMEOUT){
-                Success(apiCall.invoke())
+                ApiResult.Success(apiCall.invoke())
             }
         } catch (throwable: Throwable) {
             throwable.printStackTrace()
             when (throwable) {
                 is TimeoutCancellationException -> {
                     val code = 408 // timeout error code
-                    GenericError(code, NETWORK_ERROR_TIMEOUT)
+                    ApiResult.GenericError(code, NETWORK_ERROR_TIMEOUT)
                 }
                 is IOException -> {
-                    NetworkError
+                    ApiResult.NetworkError
                 }
                 is HttpException -> {
                     val code = throwable.code()
                     val errorResponse = convertErrorBody(throwable)
-                    GenericError(
+                    ApiResult.GenericError(
                         code,
                         errorResponse
                     )
                 }
                 else -> {
-                    GenericError(
+                    ApiResult.GenericError(
                         null,
                         UNKNOWN_ERROR
                     )
