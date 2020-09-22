@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'dagger.hilt.android.plugin'
+
 apply plugin: 'kotlin-kapt'
 
 android {
@@ -35,7 +37,7 @@ dependencies {
 
     //Okhttp3
     implementation "com.squareup.okhttp3:okhttp:4.8.1"
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.8.1'
+    implementation "com.squareup.okhttp3:logging-interceptor:$versions.okhttpVersion"
 
     //Event Calendar
     implementation 'com.github.mahimrocky:EventCalender:1.0.0'
@@ -51,13 +53,18 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
 
     //Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.10"
+
+    // debugging
+    implementation "com.jakewharton.timber:timber:$versions.timberVersion"
 
     // dagger hilt
-    implementation 'com.google.dagger:hilt-android:2.28-alpha'
-    kapt 'com.google.dagger:hilt-android-compiler:2.28-alpha'
+    implementation "com.google.dagger:hilt-android:$versions.daggerHiltCoreVersion"
+    kapt "com.google.dagger:hilt-android-compiler:$versions.daggerHiltCoreVersion"
     implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02'
     kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha02'
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02"
+
 
     testImplementation 'junit:junit:4.12'
 }
