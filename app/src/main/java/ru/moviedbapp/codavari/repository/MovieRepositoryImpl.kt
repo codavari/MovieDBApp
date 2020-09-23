@@ -1,29 +1,43 @@
 package ru.moviedbapp.codavari.repository
 
-import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.BroadcastChannel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import com.mehranj73.moviedb.data.local.MovieDao
+import com.mehranj73.moviedb.data.model.Movie
+import com.mehranj73.moviedb.data.remote.response.MovieResponse
+import com.mehranj73.moviedb.data.remote.RetrofitService
+import com.mehranj73.moviedb.ui.movie.state.MovieViewState
+import com.mehranj73.moviedb.ui.movie.state.MovieViewState.MovieDetailFields
+import com.mehranj73.moviedb.util.DataState
+import com.mehranj73.moviedb.util.StateEvent
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.moviedbapp.codavari.api.MovieApiService
+import ru.moviedbapp.codavari.db.MovieDao
 import ru.moviedbapp.codavari.models.entity.Movie
 import ru.moviedbapp.codavari.models.network.MovieResponse
-import ru.moviedbapp.codavari.states.MovieContract
 import ru.moviedbapp.codavari.util.DataState
 import ru.moviedbapp.codavari.util.StateEvent
+import javax.inject.Inject
 
-class MovieRepositoryImpl constructor(
-    private val moviesService: MovieApiService
+private const val TAG = "MovieRepositoryImpl"
+
+@FlowPreview
+class MovieRepositoryImpl @Inject constructor(
+    val retrofitService: MovieApiService,
+    val movieDao: MovieDao
 ) : MovieRepository {
 
     @FlowPreview
     override fun getNowPlaying(
         stateEvent: StateEvent
-    ): Flow<DataState<MovieContract.MovieStateEvent>> =
+    ): Flow<DataState<MovieViewState>> =
         object : NetworkBoundResource<MovieResponse, List<Movie>, MovieViewState>(
-            dispatcher = Dispatchers.IO,
+            dispatcher = IO,
             stateEvent = stateEvent,
             apiCall = {
-                moviesService.getNowPlaying()
+                retrofitService.getNowPlaying()
             },
             cacheCall = {
                 movieDao.getMovies()
@@ -32,7 +46,7 @@ class MovieRepositoryImpl constructor(
 
             override suspend fun updateCache(networkObject: MovieResponse) {
                 val movies = networkObject.results
-                withContext(Dispatchers.IO) {
+                withContext(IO) {
                     launch {
                         movieDao.insertList(movies)
                     }
@@ -53,19 +67,44 @@ class MovieRepositoryImpl constructor(
 
         }.result
 
-    override suspend fun refresh() {
+    override fun getMovieDetail(movieId: Int, stateEvent: StateEvent):
+            Flow<DataState<MovieViewState>> =
+        object : NetworkBoundResource<Movie, Movie, MovieViewState>(
+            dispatcher = IO,
+            stateEvent = stateEvent,
+            apiCall = {
 
-    }
+                retrofitService.getMovieDetail(movieId)
+            },
+            cacheCall = {
 
-    suspend fun refresh(page: Int) =
-        getMoviesFromRemote(page).let { changesChannel.send(Change.Refreshed(it)) }
+                movieDao.getMovie(movieId)
+            }
 
-    @ExperimentalCoroutinesApi
-    private val changesChannel = BroadcastChannel<Change>(Channel.CONFLATED)
+        ) {
 
-    private suspend fun getMoviesFromRemote(page: Int): List<Movie> {
-        return withContext(Dispatchers.IO) {
-            moviesService.fetchMovies(page).map(responseToDomain)
-        }
-    }
+
+            override suspend fun updateCache(networkObject: Movie) {
+
+                withContext(IO){
+                    movieDao.insert(networkObject)
+                }
+            }
+
+            override fun handleCacheSuccess(resultObj: Movie): DataState<MovieViewState> {
+                return DataState.data(
+                    response = null,
+                    data = MovieViewState(
+                        movieDetailFields = MovieDetailFields(
+                            Movie = resultObj,
+                            movieId = movieId
+                        )
+                    ),
+                    stateEvent = stateEvent
+                )
+            }
+
+        }.result
+
+
 }

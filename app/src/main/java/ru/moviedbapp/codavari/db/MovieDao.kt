@@ -11,13 +11,13 @@ import ru.moviedbapp.codavari.models.entity.Movie
 interface MovieDao {
 
     @Insert(onConflict = REPLACE)
-    suspend fun insert(movieEntity: Movie): Long
+    suspend fun insert(Movie: Movie): Long
 
     @Insert(onConflict = REPLACE)
     suspend fun insertList(movies: List<Movie>)
 
     @Delete
-    suspend fun delete(movieEntity: Movie)
+    suspend fun delete(Movie: Movie)
 
     @Query("SELECT * FROM movies")
     suspend fun getMovies(): List<Movie>
