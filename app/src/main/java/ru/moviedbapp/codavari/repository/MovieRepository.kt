@@ -5,7 +5,7 @@ import ru.moviedbapp.codavari.models.entity.Movie
 
 interface MovieRepository {
 
-  fun getMovies(page: Int): Flow<List<Movie>>
+  fun getNowPlaying(page: Int): Flow<List<Movie>>
 
   suspend fun refresh()
 
