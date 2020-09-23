@@ -1,13 +1,7 @@
 package ru.moviedbapp.codavari.repository
 
-import com.mehranj73.moviedb.data.local.MovieDao
-import com.mehranj73.moviedb.data.model.Movie
-import com.mehranj73.moviedb.data.remote.response.MovieResponse
-import com.mehranj73.moviedb.data.remote.RetrofitService
-import com.mehranj73.moviedb.ui.movie.state.MovieViewState
-import com.mehranj73.moviedb.ui.movie.state.MovieViewState.MovieDetailFields
-import com.mehranj73.moviedb.util.DataState
-import com.mehranj73.moviedb.util.StateEvent
+import ru.moviedbapp.codavari.states.MovieViewState
+import ru.moviedbapp.codavari.states.MovieViewState.MovieDetailFields
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
@@ -25,19 +19,20 @@ private const val TAG = "MovieRepositoryImpl"
 
 @FlowPreview
 class MovieRepositoryImpl @Inject constructor(
-    val retrofitService: MovieApiService,
+    val service: MovieApiService,
     val movieDao: MovieDao
 ) : MovieRepository {
 
     @FlowPreview
     override fun getNowPlaying(
+        page: Int,
         stateEvent: StateEvent
     ): Flow<DataState<MovieViewState>> =
         object : NetworkBoundResource<MovieResponse, List<Movie>, MovieViewState>(
             dispatcher = IO,
             stateEvent = stateEvent,
             apiCall = {
-                retrofitService.getNowPlaying()
+                service.fetchMovies(page)
             },
             cacheCall = {
                 movieDao.getMovies()
@@ -58,13 +53,10 @@ class MovieRepositoryImpl @Inject constructor(
             override fun handleCacheSuccess(resultObj: List<Movie>): DataState<MovieViewState> {
                 return DataState.data(
                     response = null,
-                    data = MovieViewState(
-                        movies = resultObj
-                    ),
+                    data = MovieViewState(movies = resultObj),
                     stateEvent = stateEvent
                 )
             }
-
         }.result
 
     override fun getMovieDetail(movieId: Int, stateEvent: StateEvent):
@@ -72,12 +64,8 @@ class MovieRepositoryImpl @Inject constructor(
         object : NetworkBoundResource<Movie, Movie, MovieViewState>(
             dispatcher = IO,
             stateEvent = stateEvent,
-            apiCall = {
-
-                retrofitService.getMovieDetail(movieId)
-            },
+            apiCall = { service.fetchMovieDetail(movieId) },
             cacheCall = {
-
                 movieDao.getMovie(movieId)
             }
 
@@ -96,7 +84,7 @@ class MovieRepositoryImpl @Inject constructor(
                     response = null,
                     data = MovieViewState(
                         movieDetailFields = MovieDetailFields(
-                            Movie = resultObj,
+                            movieEntity = resultObj,
                             movieId = movieId
                         )
                     ),
@@ -105,6 +93,10 @@ class MovieRepositoryImpl @Inject constructor(
             }
 
         }.result
+
+    override suspend fun refresh() {
+        TODO("Not yet implemented")
+    }
 
 
 }

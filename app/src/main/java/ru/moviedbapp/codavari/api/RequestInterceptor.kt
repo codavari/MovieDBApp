@@ -1,6 +1,5 @@
 package ru.moviedbapp.codavari.api
 
-import com.skydoves.themovies2.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Response
 import ru.moviedbapp.BuildConfig
