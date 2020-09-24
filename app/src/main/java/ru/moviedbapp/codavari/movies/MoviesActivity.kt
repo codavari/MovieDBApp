@@ -1,11 +1,11 @@
-package ru.moviedbapp.codavari
+package ru.moviedbapp.codavari.movies
 
 import android.os.Bundle
 import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import ru.moviedbapp.R
 
-class MainActivity : AppCompatActivity(){
+class MoviesActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
         setContentView(R.layout.activity_main)

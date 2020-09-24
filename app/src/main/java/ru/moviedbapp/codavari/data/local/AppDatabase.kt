@@ -10,8 +10,4 @@ import ru.moviedbapp.codavari.models.entity.Movie
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun movieDao(): MovieDao
-
-    companion object {
-        const val DATABASE_NAME: String = "movies"
-    }
 }
