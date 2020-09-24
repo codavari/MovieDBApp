@@ -1,4 +1,4 @@
-package ru.moviedbapp.codavari.repository
+package ru.moviedbapp.codavari.data.repository
 
 import ru.moviedbapp.codavari.states.MovieViewState
 import ru.moviedbapp.codavari.states.MovieViewState.MovieDetailFields
@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.moviedbapp.codavari.api.MovieApiService
-import ru.moviedbapp.codavari.db.MovieDao
+import ru.moviedbapp.codavari.data.local.MovieDao
+import ru.moviedbapp.codavari.data.remote.MovieResponse
 import ru.moviedbapp.codavari.models.entity.Movie
-import ru.moviedbapp.codavari.models.network.MovieResponse
 import ru.moviedbapp.codavari.util.DataState
 import ru.moviedbapp.codavari.util.StateEvent
 import javax.inject.Inject

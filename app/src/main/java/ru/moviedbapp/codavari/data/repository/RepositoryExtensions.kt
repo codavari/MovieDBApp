@@ -1,4 +1,4 @@
-package ru.moviedbapp.codavari.repository
+package ru.moviedbapp.codavari.data.repository
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.TimeoutCancellationException

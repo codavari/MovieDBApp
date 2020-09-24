@@ -1,7 +1,6 @@
-package ru.moviedbapp.codavari.repository
+package ru.moviedbapp.codavari.data.repository
 
 import kotlinx.coroutines.flow.Flow
-import ru.moviedbapp.codavari.models.entity.Movie
 import ru.moviedbapp.codavari.states.MovieViewState
 import ru.moviedbapp.codavari.util.DataState
 import ru.moviedbapp.codavari.util.StateEvent

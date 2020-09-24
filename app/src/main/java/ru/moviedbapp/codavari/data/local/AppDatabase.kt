@@ -1,4 +1,4 @@
-package ru.moviedbapp.codavari.db
+package ru.moviedbapp.codavari.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

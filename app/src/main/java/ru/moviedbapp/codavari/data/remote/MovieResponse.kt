@@ -1,4 +1,4 @@
-package ru.moviedbapp.codavari.remote
+package ru.moviedbapp.codavari.data.remote
 
 import ru.moviedbapp.codavari.models.entity.Movie
 

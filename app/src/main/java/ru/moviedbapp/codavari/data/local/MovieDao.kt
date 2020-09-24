@@ -1,4 +1,4 @@
-package ru.moviedbapp.codavari.db
+package ru.moviedbapp.codavari.data.local
 
 import androidx.room.Dao
 import androidx.room.Delete

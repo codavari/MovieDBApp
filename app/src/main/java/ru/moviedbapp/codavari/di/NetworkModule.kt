@@ -8,7 +8,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import ru.moviedbapp.codavari.api.MovieApiService
-import ru.moviedbapp.codavari.models.network.HttpRequestInterceptor
+import ru.moviedbapp.codavari.api.RequestInterceptor
 import javax.inject.Singleton
 
 
@@ -20,7 +20,7 @@ object NetworkModule {
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(HttpRequestInterceptor())
+            .addInterceptor(RequestInterceptor())
             .build()
     }
 
