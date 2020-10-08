@@ -91,6 +91,5 @@ constructor(
 
     abstract fun handleCacheSuccess(resultObj: CacheObj): DataState<ViewState> // make sure to return null for stateEvent
 
-
 }
 

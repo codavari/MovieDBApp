@@ -1,4 +1,4 @@
-package ru.moviedbapp.codavari.movies
+package ru.moviedbapp.codavari
 
 import android.os.Bundle
 import android.os.PersistableBundle
