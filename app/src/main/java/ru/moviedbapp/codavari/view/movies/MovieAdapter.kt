@@ -1,4 +1,4 @@
-package ru.moviedbapp.codavari.view
+package ru.moviedbapp.codavari.view.movies
 
 import android.view.LayoutInflater
 import android.view.View

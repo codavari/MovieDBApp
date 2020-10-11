@@ -1,18 +1,18 @@
-package ru.moviedbapp.codavari.movies
+package ru.moviedbapp.codavari.view.movies
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_movie_list.*
 import ru.moviedbapp.R
-import ru.moviedbapp.codavari.view.MovieAdapter
 
 class MoviesFragment : Fragment() {
 
-    private lateinit var movieAdapter: MovieAdapter
+    val moviesViewModel: MoviesViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,5 +26,6 @@ class MoviesFragment : Fragment() {
     private fun initUI() {
         rv_movies_list.layoutManager = LinearLayoutManager(requireContext())
         rv_movies_list.adapter = MovieAdapter()
+        moviesViewModel
     }
 }
