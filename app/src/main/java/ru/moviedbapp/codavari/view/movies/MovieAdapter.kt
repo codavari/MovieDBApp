@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleObserver
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.github.florent37.glidepalette.BitmapPalette
@@ -29,6 +31,22 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>(), LifecycleO
     override fun getItemCount(): Int {
         return movies.size
     }
+
+    private val differCallback = object : DiffUtil.ItemCallback<Movie>(){
+
+        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+            return oldItem.id == newItem.id
+
+        }
+
+        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+            return oldItem == newItem
+        }
+
+
+    }
+
+    val differ = AsyncListDiffer(this, differCallback)
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 

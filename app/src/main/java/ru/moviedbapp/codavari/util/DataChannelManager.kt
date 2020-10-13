@@ -25,7 +25,7 @@ abstract class DataChannelManager<ViewState> {
     val numActiveJobs: LiveData<Int>
         get() = _numActiveJobs
 
-    fun setupChannel(){
+    fun setupChannel() {
         cancelJobs()
         setupNewChannelScope(CoroutineScope(IO))
     }
@@ -35,12 +35,12 @@ abstract class DataChannelManager<ViewState> {
     fun launchJob(
         stateEvent: StateEvent,
         jobFunction: Flow<DataState<ViewState>?>
-    ){
-        if(!isStateEventActive(stateEvent) && messageStack.size == 0){
+    ) {
+        if (!isStateEventActive(stateEvent) && messageStack.size == 0) {
             addStateEvent(stateEvent)
             jobFunction
-                .onEach{ dataState ->
-                    withContext(Main){
+                .onEach { dataState ->
+                    withContext(Main) {
                         dataState?.data?.let { data ->
                             handleNewData(data)
                         }
@@ -56,7 +56,7 @@ abstract class DataChannelManager<ViewState> {
         }
     }
 
-    private fun handleNewStateMessage(stateMessage: StateMessage){
+    private fun handleNewStateMessage(stateMessage: StateMessage) {
         appendStateMessage(stateMessage)
     }
 
@@ -64,21 +64,21 @@ abstract class DataChannelManager<ViewState> {
         messageStack.add(stateMessage)
     }
 
-    fun clearStateMessage(index: Int = 0){
+    fun clearStateMessage(index: Int = 0) {
         messageStack.removeAt(index)
     }
 
-    private fun clearActiveStateEventCounter(){
+    private fun clearActiveStateEventCounter() {
         _activeStateEvents.clear()
         syncNumActiveStateEvents()
     }
 
-    private fun addStateEvent(stateEvent: StateEvent){
+    private fun addStateEvent(stateEvent: StateEvent) {
         _activeStateEvents.add(stateEvent.toString())
         syncNumActiveStateEvents()
     }
 
-    private fun removeStateEvent(stateEvent: StateEvent?){
+    private fun removeStateEvent(stateEvent: StateEvent?) {
         _activeStateEvents.remove(stateEvent.toString())
         syncNumActiveStateEvents()
     }
@@ -87,22 +87,22 @@ abstract class DataChannelManager<ViewState> {
         return isStateEventActive(stateEvent)
     }
 
-    private fun isStateEventActive(stateEvent: StateEvent): Boolean{
+    private fun isStateEventActive(stateEvent: StateEvent): Boolean {
         return _activeStateEvents.contains(stateEvent.toString())
     }
 
     fun getChannelScope(): CoroutineScope {
-        return channelScope?: setupNewChannelScope(CoroutineScope(IO))
+        return channelScope ?: setupNewChannelScope(CoroutineScope(IO))
     }
 
-    private fun setupNewChannelScope(coroutineScope: CoroutineScope): CoroutineScope{
+    private fun setupNewChannelScope(coroutineScope: CoroutineScope): CoroutineScope {
         channelScope = coroutineScope
         return channelScope as CoroutineScope
     }
 
-    fun cancelJobs(){
-        if(channelScope != null){
-            if(channelScope?.isActive == true){
+    fun cancelJobs() {
+        if (channelScope != null) {
+            if (channelScope?.isActive == true) {
                 channelScope?.cancel()
             }
             channelScope = null
@@ -110,7 +110,7 @@ abstract class DataChannelManager<ViewState> {
         clearActiveStateEventCounter()
     }
 
-    private fun syncNumActiveStateEvents(){
+    private fun syncNumActiveStateEvents() {
         _numActiveJobs.value = _activeStateEvents.size
     }
 }

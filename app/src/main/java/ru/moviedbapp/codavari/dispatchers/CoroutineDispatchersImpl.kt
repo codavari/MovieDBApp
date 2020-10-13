@@ -8,6 +8,6 @@ import javax.inject.Singleton
 
 @Singleton
 class CoroutineDispatchersImpl @Inject constructor() : CoroutineDispatchers {
-  override val main: CoroutineDispatcher = Dispatchers.Main
-  override val io: CoroutineDispatcher = Dispatchers.IO
+    override val main: CoroutineDispatcher = Dispatchers.Main
+    override val io: CoroutineDispatcher = Dispatchers.IO
 }
