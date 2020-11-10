@@ -14,18 +14,18 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object PersistenceModule {
 
-  @Provides
-  @Singleton
-  fun provideAppDatabase(application: Application): AppDatabase {
-    return Room
-      .databaseBuilder(application, AppDatabase::class.java, "movies")
-      .fallbackToDestructiveMigration()
-      .build()
-  }
+    @Provides
+    @Singleton
+    fun provideAppDatabase(application: Application): AppDatabase {
+        return Room
+            .databaseBuilder(application, AppDatabase::class.java, "movies")
+            .fallbackToDestructiveMigration()
+            .build()
+    }
 
-  @Provides
-  @Singleton
-  fun provideMovieDao(appDatabase: AppDatabase): MovieDao {
-    return appDatabase.movieDao()
-  }
+    @Provides
+    @Singleton
+    fun provideMovieDao(appDatabase: AppDatabase): MovieDao {
+        return appDatabase.movieDao()
+    }
 }
